@@ -1,0 +1,20 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const url_controller_1 = require("./../controllers/url.controller");
+const router = express_1.Router();
+router.post('/save-url', url_controller_1.saveURL);
+router.post('/save-multiple-url', url_controller_1.saveMultipleURL);
+router.post('/save-list', url_controller_1.saveList);
+router.get('/get-lists-by-userid/:userID', url_controller_1.getListsBYUserID);
+router.get('/get-urls-by-userid/:userID', url_controller_1.getURLsBYUserID);
+router.get('/get-urls-by-id/:id', url_controller_1.getByID);
+router.get('/get-urls-by-companyid/:companyID', url_controller_1.getURLsBYCompanyID);
+router.get('/get-urls-by-code/:code', url_controller_1.getURLsBYCode);
+router.get('/get-urls-by-companyid-and-code/:companyID/:code', url_controller_1.getURLsBYCompanyIDAndCode);
+router.post('/isset-companyname-and-text', url_controller_1.issetCompanyNameAndText);
+router.get('/get-urls-by-list/:listID', url_controller_1.getURLsBYListID);
+router.delete('/delete-list/:listID', url_controller_1.delList);
+router.delete('/delete-url/:urlID', url_controller_1.delURL);
+exports.default = router;
+//# sourceMappingURL=url.routes.js.map
