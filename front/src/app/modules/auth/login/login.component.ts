@@ -30,11 +30,14 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
+    this.generalService.isLoad('1')
     this.authService.login(this.form).subscribe((user:CUser)=>{
       localStorage.setItem('bintuser', JSON.stringify(user))
-      this.router.navigate(['/']);
+      this.generalService.isLoad('0')
+      this.router.navigate(['/'])
     }, error =>{
-      this.generalService.c('Login Error', error)
+        this.generalService.isLoad('0')
+        this.generalService.c('Login Error', error)
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
     })
   }

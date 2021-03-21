@@ -1,0 +1,39 @@
+@import './../../../styles/variables';
+
+$widthCircle: 40px;
+.item-step{
+    color: white;
+    background-color: $color7;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: $widthCircle;    
+    max-width: $widthCircle;
+    min-height: $widthCircle;    
+    max-height: $widthCircle;
+    font-size: 18pt;
+    font-weight: 500;
+}
+
+.active{
+    background-color: $color1 !important;
+}
+
+select, input, .form-group{
+    width: 100% !important;
+}
+
+.row-content{
+    width: 33%;
+    min-width: 33%;
+    max-width: 33%;
+}
+
+@media (max-width:1024px){
+    .row-content{
+        width: 100% !important;
+        min-width: 100%;
+        max-width: 100%;
+    }
+}

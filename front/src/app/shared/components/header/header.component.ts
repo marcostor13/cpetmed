@@ -10,6 +10,7 @@ import { AuthService } from './../../../modules/auth/services/auth.service';
 export class HeaderComponent implements OnInit {
 
   menuHeader: Boolean = false
+  pathname: String = window.location.pathname
 
   constructor(
     private router: Router,

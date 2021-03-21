@@ -1,0 +1,86 @@
+<app-header></app-header>
+<div class="row">
+    <div class="d-none d-xl-block menu-container bg-color1 p-0 m-0 pt-5">
+        <app-menu></app-menu>
+    </div>
+
+    <div class="container-container flex-1 bg-color5 p-5">        
+        
+        <div class="col-12">
+            <div class="d-flex justify-content-between my-3">
+                <h4> Doctores </h4>                
+            </div>
+        
+            <ul class="list-group">
+                <li *ngFor="let item of items" class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">{{item.name}}</h5>
+                        <p class="d-block">{{item.email}}</p>
+                        <span class="text-color1">{{item.dni}}</span>                       
+                    </div>
+                    
+                    <div class="ml-4">
+                        <button (click)="getData(item)" class="btn2 p-0 pt-1 pb-1 pl-4 pr-4 mr-3">Editar Información</button>
+                    </div>
+                    
+                </li>
+            </ul>
+    </div>
+</div>
+
+<p-dialog 
+    header="" 
+    [(visible)]="displayModal" 
+    [modal]="true" 
+    [styleClass]="'modalAddEdit'" 
+    [baseZIndex]="10000"
+    [draggable]="false"
+    [resizable]="false"
+    [autoZIndex]="false"
+    >
+
+    <div class="row m-0 justify-content-center">
+        <div class="row m-0 p-0 flex-column">
+            <div class="mt-2">
+                <label class="w-100">Nombre</label>
+                <input type="text" placeholder="Nombre" [(ngModel)]="form.name">
+            </div>
+            <div class="mt-2">
+                <label class="w-100">Correo</label>
+                <input type="email" placeholder="Correo" [(ngModel)]="form.email">
+            </div>
+            <div class="mt-2">
+                <label class="w-100">Dirección</label>
+                <input type="text" placeholder="Dirección" [(ngModel)]="form.address">
+            </div>
+            <div class="mt-2">
+                <label class="w-100">Teléfono</label>
+                <input type="text" placeholder="Teléfono" [(ngModel)]="form.phone">
+            </div>
+            <div class="mt-2">
+                <label class="w-100">Nro Documento</label>
+                <input type="text" placeholder="Documento" [(ngModel)]="form.dni">
+            </div>
+            <div class="mt-2">
+                <label class="w-100">Colegiatura</label>
+                <input type="text" placeholder="Colegiatura" [(ngModel)]="form.colegiatura">
+            </div>
+
+            <div class="mt-2">
+                <label class="w-100">Especialidad</label>
+                <select [(ngModel)]="form.specialtyid">
+                    <option value="">Seleccione una especialidad</option>
+                    <option *ngFor="let specialty of specialties" value="{{specialty._id}}">{{specialty.name}}</option>
+                </select>
+            </div>
+         
+            <div class="mt-4">
+                <button class="btn1 w-100" (click)="save()" >Guardar</button>
+            </div>                 
+        </div>
+    </div>
+
+</p-dialog>
+
+<p-confirmPopup [baseZIndex]="10001" ></p-confirmPopup>
+<p-toast></p-toast>

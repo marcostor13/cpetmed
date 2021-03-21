@@ -1,26 +1,15 @@
 <div>
     <ul class="list-unstyled col-12 m-0 bg-color1 p-0">
-        <li (click)="redirect('/dashboard')" [ngClass]="{'active': path == '/'}" class="cursor pl-5 p-3 text-white">
-            <fa-icon [icon]="faTachometerAlt"></fa-icon>
-            <label class="ml-4 cursor">Dashboard</label>
+        <li *ngFor="let item of menu" [routerLink]="['/'+item.link]" [ngClass]="{'active': path == '/'+item.link}" class="cursor pl-5 p-3 text-white">
+            <fa-icon class="cursor" [icon]="item.icon"></fa-icon>
+            <label class="cursor ml-2 pr-5">{{item.name}}</label>
         </li>
-        <li (click)="redirect('/admin/companies/list')" [ngClass]="{'active': path == '/'}" class="cursor pl-5 p-3 text-white">
-            <fa-icon [icon]="faTachometerAlt"></fa-icon>
-            <label class="ml-4 cursor">Empresas</label>
-        </li>
-        <li (click)="redirect('/admin/landings/list')" [ngClass]="{'active': path == '/'}" class="cursor pl-5 p-3 text-white">
-            <fa-icon [icon]="faTachometerAlt"></fa-icon>
-            <label class="ml-4 cursor">Landings</label>
-        </li>    
-        <li (click)="redirect('/urls/list')" [ngClass]="{'active': path == '/'}" class="cursor pl-5 p-3 text-white">
-            <fa-icon [icon]="faTachometerAlt"></fa-icon>
-            <label class="ml-4 cursor">Urls</label>
-        </li>
-        <li (click)="confirm($event)" class="cursor pl-5 p-3 text-white">
-            <fa-icon [icon]="faDoorOpen"></fa-icon>
-            <label class="ml-4 cursor">Cerrar Sesión</label>
+        <li (click)="confirm($event)" class="cursor pl-5 p-3 text-white mt-5">
+            <fa-icon class="cursor" [icon]="faDoorOpen"></fa-icon>
+            <label class="cursor ml-2 pr-5">Cerrar Sesión</label>
         </li>
     </ul>
 </div>
 
 <p-confirmPopup></p-confirmPopup>
+

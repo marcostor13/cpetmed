@@ -1,0 +1,84 @@
+<app-header></app-header>
+<div class="row">
+    <div class="d-none d-xl-block menu-container bg-color1 p-0 m-0 pt-5">
+        <app-menu></app-menu>
+    </div>
+
+    <div class="container-container flex-1 bg-color5 p-5">        
+        
+        <div class="col-12">
+            <div class="d-flex justify-content-between my-3">
+                <h4> Calendario </h4>             
+                <div class="mt-2">
+                    <label class="w-100">Doctor</label>
+                    <select [(ngModel)]="doctorId" (change)="getDataCalendarDoctor()">
+                        <option value="">Seleccione un doctor</option>
+                        <option *ngFor="let doctor of doctors" value="{{doctor._id}}">{{doctor.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <nz-calendar *ngIf="doctorId !== ''" [(ngModel)]="date" [(nzMode)]="mode" (nzSelectChange)="dateSelect($event)" [ngStyle]="{'max-width': '100%'}">
+                    <ul *nzDateCell="let date" class="col-12 p-0">
+                        <ng-container [ngSwitch]="getFormatDate(date)">
+                            <ng-container *ngFor="let item of dataCalendarDoctorFormat" >      
+                                <ng-container *ngSwitchCase="item.date">                                                      
+                                    <ul class="list-unstyled col-12 p-0 row flex-column m-0 justify-content-center">
+                                        <li *ngFor="let hour of item.hours" [ngClass]="{'bg-color2': hour.inactive}" class="mt-1 pt-1 pb-1 bg-color1 rounded-pill p-0 pl-2 pr-2 row m-0 justify-content-center align-items-center">
+                                            <label class="text-white font-500 m-0">{{hour.hour}}</label>
+                                        </li>                                        
+                                    </ul>
+                                </ng-container>                                 
+                               
+                            </ng-container>
+                        </ng-container>
+                    </ul>
+                    
+                </nz-calendar>
+            </div>
+        
+            
+    </div>
+</div>
+
+<p-dialog 
+    header="" 
+    [(visible)]="displayModal" 
+    [modal]="true" 
+    [styleClass]="'modalAddEdit'" 
+    [baseZIndex]="10000"
+    [draggable]="false"
+    [resizable]="false"
+    >
+
+    <div class="row m-0 justify-content-center flex-column align-items-center">
+        <div class="row m-0 p-0 flex-column">
+            <label class="text-color1 display-3 p-0 m-0">{{capitalize(formatDate(date, 'dddd'))}}</label>
+            <div class="row m-0 justify-content-start align-items-center">
+                <label class="text-color1 font-500 display-3 p-0 m-0">{{date.getDate()}}</label>
+                <div class="row m-0 flex-column justify-content-center align-items-start ml-3">
+                    <label class="text-color1 f-16 p-0 m-0">{{capitalize(formatDate(date, 'MMMM'))}}</label>
+                    <label class="text-color1 f-16 p-0 m-0">{{formatDate(date, 'YYYY')}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row m-0 p-0 flex-column mt-4">   
+            <p-listbox [metaKeySelection]="false" [listStyle]="{'max-height':'350px'}" [style]="{'width':'100%'}" [filter]="true" [checkbox]="true" [options]="listHours" [(ngModel)]="selectedHours" [multiple]="true" optionLabel="hour" optionDisabled="inactive">
+                <ng-template let-item pTemplate="item">
+                    <div class="row m-0">                        
+                        <div>{{item.hour}}</div>
+                        <div class="ml-3 text-danger">{{item.inactive? 'Con cita': ''}}</div>
+                    </div>
+                </ng-template>
+            </p-listbox>
+            <div class="mt-4">
+                <button class="btn1 w-100" (click)="save()" >Guardar</button>
+            </div>                 
+        </div>
+    </div>
+
+</p-dialog>
+
+<p-confirmPopup [baseZIndex]="10001" ></p-confirmPopup>
+<p-toast></p-toast>

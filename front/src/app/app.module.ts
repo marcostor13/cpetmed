@@ -19,6 +19,12 @@ import { Reducer } from '@reducers/reducer';
 import { storageMetaReducer } from 'src/app/store/reducers/metareducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MessageModule } from 'primeng/message';
+import es from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { es_ES } from 'ng-zorro-antd/i18n';
+
+registerLocaleData(es);
 
 @NgModule({
   declarations: [
@@ -43,7 +49,8 @@ import { MessageModule } from 'primeng/message';
   ],
   providers: [
     AuthTokenHttpInterceptorProvider,
-    HttpErrorHttpInterceptorProvider
+    HttpErrorHttpInterceptorProvider,
+    { provide: NZ_I18N, useValue: es_ES },
   ],
   bootstrap: [AppComponent]
 })

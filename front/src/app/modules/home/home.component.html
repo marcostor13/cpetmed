@@ -1,0 +1,106 @@
+<app-header></app-header>
+
+
+<div class="container">
+    <div class="row m-0 justify-content-between flex-wrap mt-3">
+
+        <div class="row-content mt-3">
+            <div class="col-12 row justify-content-center">
+                <div class="item-step" [ngClass]="{'active': step === 1}">1</div>
+            </div>
+            <div class="row p-4">                
+
+                    <div class="form-group">
+                        <label>Especialidad</label>
+                        <select (change)="getDoctorsBySpecialties()" [(ngModel)]="specialtyid">                            
+                            <option value="">Seleccione una especialidad</option>
+                            <option *ngFor="let specialty of specialties" value="{{specialty._id}}">{{specialty.name}}</option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="doctors?.length > 0" class="form-group">
+                        <label>Doctor</label>
+                        <select (change)="getDoctorCalendar()" [(ngModel)]="doctorid">
+                            <option value="">Seleccione un doctor</option>
+                            <option *ngFor="let doctor of doctors" value="{{doctor._id}}">{{doctor.name}}</option>
+                        </select>
+                    </div>     
+                
+            </div>
+        </div>
+        <div class="row-content mt-3">
+            <div class="col-12 row justify-content-center">
+                <div class="item-step" [ngClass]="{'active': step === 2}">2</div>
+            </div>
+            <div class="row p-4">      
+            
+                <div *ngIf="dataCalendarDoctor" class="form-group">
+                    <label>Fecha</label>
+                    <select (change)="getHours()" [(ngModel)]="date">
+                        <option value="">Seleccione una fecha</option>
+                        <option *ngFor="let date of dataCalendarDoctor" value="{{date.date}}">{{date.date}}
+                        </option>
+                    </select>
+                </div> 
+                
+                <div *ngIf="hours?.length > 0" class="form-group">
+                    <label>Hora</label>
+                    <select (change)="step = 3" [(ngModel)]="hour">
+                        <option value="">Seleccione una hora</option>
+                        <ng-container *ngFor="let hour of hours">
+                            <option  *ngIf="!hour.inactive" value="{{hour.hour}}">{{hour.hour}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            
+            </div>
+            
+        </div>
+        <div class="row-content mt-3">
+            <div class="col-12 row justify-content-center">
+                <div class="item-step" [ngClass]="{'active': step === 3}">3</div>
+            </div>
+
+            <div class="row p-4" *ngIf="hour !== ''" >
+
+                <div class="form-group">
+                    <label>Nombre<span class="text-danger"> *</span></label>
+                    <input type="text" placeholder="Ingrese su nombre" [(ngModel)]="form.firstname">
+                </div>
+                <div class="form-group">
+                    <label>Apellido<span class="text-danger"> *</span></label>
+                    <input type="text" placeholder="Ingrese su apellido" [(ngModel)]="form.lastname">
+                </div>
+                <div class="form-group">
+                    <label>Nro Documento<span class="text-danger"> *</span></label>
+                    <input type="text" placeholder="Ingrese su nro de documento" [(ngModel)]="form.dni">
+                </div>
+                <div class="form-group">
+                    <label>Correo<span class="text-danger"> *</span></label>
+                    <input type="email" placeholder="Ingrese su nombre" [(ngModel)]="form.email">
+                </div>
+                <div class="form-group">
+                    <label>Teléfono<span class="text-danger"> *</span></label>
+                    <input type="number" placeholder="Ingrese su teléfono" [(ngModel)]="form.phone">
+                </div>
+                <div class="form-group">
+                    <label>Fec de nacimiento<span class="text-danger"> *</span></label>
+                    <input type="date" placeholder="Ingrese su Fec. nacimiento" [(ngModel)]="form.dateofbirth">
+                </div>
+
+                <div class="form-group mt-4">
+                    <button class="btn1" (click)="save()">Reservar</button>
+                </div>
+
+            </div>
+
+            
+            
+           
+        </div>
+
+    </div>
+</div>
+
+<p-confirmPopup></p-confirmPopup>
+<p-toast></p-toast>

@@ -3,11 +3,15 @@ import * as cors from 'cors'
 import * as morgan from 'morgan'
 import authRoutes from './routes/auth.routes'
 import emailRoutes from './routes/email.routes'
-import adminLandingRoutes from './routes/admin/landing.routes'
-import adminCompanyRoutes from './routes/admin/company.routes'
-import eventsRoutes from './routes/events.routes'
-import urlRoutes from './routes/url.routes'
-import dashboardRouter from './routes/dashboard.routes'
+import userRoutes from './routes/user.routes'
+import patientRoutes from './routes/patient.routes'
+import specialtyRoutes from './routes/specialty.routes'
+import doctorRoutes from './routes/doctor.routes'
+import procedureRoutes from './routes/procedure.routes'
+import equipmentRoutes from './routes/equipment.routes'
+import calendarRoutes from './routes/calendar.routes'
+import appointmentRoutes from './routes/appointment.routes'
+
 
 import './database'
 import passportMiddleware from './middlewares/auth/passport'
@@ -36,12 +40,16 @@ passport.use(passportMiddleware)
 
 
 app.use(authRoutes)
-app.use(adminLandingRoutes)
-app.use(adminCompanyRoutes)
 app.use(emailRoutes)
-app.use(urlRoutes)
-app.use(eventsRoutes)
-app.use(dashboardRouter)
+app.use(userRoutes)
+app.use(patientRoutes)
+app.use(specialtyRoutes)
+app.use(doctorRoutes)
+app.use(procedureRoutes)
+app.use(equipmentRoutes)
+app.use(calendarRoutes)
+app.use(appointmentRoutes)
+
 
 
 //LOCAL
@@ -51,9 +59,6 @@ app.use(dashboardRouter)
 async function main() {
     app.listen(app.get('port'))
     console.log('Server on port ', app.get('port'))
-    console.log(process.env.MONGODB_URI)
-    console.log(process.env.MONGODB_USER)
-    console.log(process.env.MONGODB_PASSWORD)
 }
 
 main()

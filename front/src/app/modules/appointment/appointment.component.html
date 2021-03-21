@@ -1,0 +1,159 @@
+<app-header></app-header>
+<div class="row">
+    <div class="d-none d-xl-block menu-container bg-color1 p-0 m-0 pt-5">
+        <app-menu></app-menu>
+    </div>
+
+    <div class="container-container flex-1 bg-color5 p-5">        
+        
+        <div class="col-12">
+            <div class="d-flex justify-content-between my-3">
+                <h4> Citas </h4>
+                <!-- <button (click)="addEdit()" class="btn1">Agregar</button> -->
+            </div>
+        
+            <ul class="list-group">
+                <li *ngFor="let item of items" class="cursor list-group-item d-flex justify-content-between align-items-center">
+                    <div class="pl-3">
+                        <div class="row">
+                            <span class="font-500">Doctor:</span>
+                            <span class="ml-2">{{item.doctor}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="font-500">Paciente:</span>
+                            <span class="ml-2">{{item.dateUser.firstname}} {{item.dateUser.lastname}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="font-500">Especialidad:</span>
+                            <span class="ml-2">{{item.specialty}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="font-500">Fecha y Hora:</span>
+                            <span class="ml-2">{{item.date}} - {{item.hour}}</span>
+                        </div>
+                                   
+                    </div>
+                    
+                    <div class="ml-4">
+                        <button (click)="editPatientData(item)" class="btn2 p-0 pt-1 pb-1 pl-4 pr-4 mr-3">Datos del paciente</button>
+                        <button (click)="editAppointmentData(item)" class="btn2 p-0 pt-1 pb-1 pl-4 pr-4 mr-3">Datos de la cita</button>
+                        <button (click)="confirm($event, item)" class="btn1 bg-danger p-0 pt-1 pb-1 pl-4 pr-4">Eliminar</button>
+                    </div>
+                    
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<p-dialog 
+    header="" 
+    [(visible)]="displayModalEditPatient" 
+    [modal]="true" 
+    [styleClass]="'modalAddEdit'" 
+    [baseZIndex]="10000"
+    [draggable]="false"
+    [resizable]="false"
+    [autoZIndex]="false"
+    >
+
+    <div class="row m-0 justify-content-center">
+        <div class="row m-0 p-0 flex-column">
+            <div class="mt-2">
+                <label class="w-100">Fecha</label>
+                <input type="text" placeholder="Nombre" [(ngModel)]="currentAppointment?.dateUser.firstname">
+            </div> 
+            <div class="mt-2">
+                <label class="w-100">Hora</label>
+                <input type="text" placeholder="Apellido" [(ngModel)]="currentAppointment?.dateUser.lastname">
+            </div>
+            <div class="mt-2">
+                <label class="w-100">Documento</label>
+                <input type="text" placeholder="Documento" [(ngModel)]="currentAppointment?.dateUser.dni">
+            </div>
+            <div class="mt-2">
+                <label class="w-100">Fecha de nacimiento</label>
+                <input type="text" placeholder="Fecha de nacimiento" [(ngModel)]="currentAppointment?.dateUser.dateofbirth">
+            </div>
+            <div class="mt-2">
+                <label class="w-100">Correo</label>
+                <input type="text" placeholder="Correo" [(ngModel)]="currentAppointment?.dateUser.email">
+            </div>
+            <div class="mt-2">
+                <label class="w-100">Teléfono</label>
+                <input type="text" placeholder="Teléfono" [(ngModel)]="currentAppointment?.dateUser.phone">
+            </div>
+            <div class="mt-4">
+                <button class="btn1 w-100" (click)="save()" >Guardar</button>
+            </div>                 
+        </div>
+    </div>
+
+</p-dialog>
+
+
+<p-dialog 
+    header="" 
+    [(visible)]="displayModalEditAppointment" 
+    [modal]="true" 
+    [styleClass]="'modalAddEdit'" 
+    [baseZIndex]="10000"
+    [draggable]="false"
+    [resizable]="false"
+    [autoZIndex]="false"
+    >
+
+    <div class="row m-0 justify-content-center">
+        <div class="row m-0 p-0 flex-column">
+            
+            <div class="form-group">
+                <label>Especialidad</label>
+                <select (change)="getDoctorsBySpecialties()" [(ngModel)]="specialtyid">
+                    <option value="">Seleccione una especialidad</option>
+                    <option *ngFor="let specialty of specialties" value="{{specialty._id}}">{{specialty.name}}</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Doctor</label>
+                <select (change)="getDoctorCalendar()" [(ngModel)]="doctorid">
+                    <option value="">Seleccione un doctor</option>
+                    <option *ngFor="let doctor of doctors" value="{{doctor._id}}">{{doctor.name}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Fecha</label>
+                <select (change)="getHours()" [(ngModel)]="date">
+                    <option value="">Seleccione una fecha</option>
+                    <option *ngFor="let date of dataCalendarDoctor" value="{{date.date}}">{{date.date}}
+                    </option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Hora</label>
+                <select [(ngModel)]="hour">
+                    <option value="">Seleccione una hora</option>
+                    <ng-container *ngFor="let hour of hours">
+                        <option *ngIf="!hour.inactive" value="{{hour.hour}}">{{hour.hour}}</option>
+                    </ng-container>
+                </select>
+            </div>
+
+
+
+
+            <div class="mt-4">
+                <button class="btn1 w-100" (click)="updateAppointmentData()" >Guardar</button>
+            </div>                 
+        </div>
+    </div>
+
+</p-dialog>
+
+
+
+<p-confirmPopup [baseZIndex]="10001" ></p-confirmPopup>
+<p-toast></p-toast>

@@ -14,11 +14,14 @@ const cors = require("cors");
 const morgan = require("morgan");
 const auth_routes_1 = require("./routes/auth.routes");
 const email_routes_1 = require("./routes/email.routes");
-const landing_routes_1 = require("./routes/admin/landing.routes");
-const company_routes_1 = require("./routes/admin/company.routes");
-const events_routes_1 = require("./routes/events.routes");
-const url_routes_1 = require("./routes/url.routes");
-const dashboard_routes_1 = require("./routes/dashboard.routes");
+const user_routes_1 = require("./routes/user.routes");
+const patient_routes_1 = require("./routes/patient.routes");
+const specialty_routes_1 = require("./routes/specialty.routes");
+const doctor_routes_1 = require("./routes/doctor.routes");
+const procedure_routes_1 = require("./routes/procedure.routes");
+const equipment_routes_1 = require("./routes/equipment.routes");
+const calendar_routes_1 = require("./routes/calendar.routes");
+const appointment_routes_1 = require("./routes/appointment.routes");
 require("./database");
 const passport_1 = require("./middlewares/auth/passport");
 const passport = require("passport");
@@ -36,20 +39,20 @@ app.use(passport.initialize());
 passport.use(passport_1.default);
 //Routes
 app.use(auth_routes_1.default);
-app.use(landing_routes_1.default);
-app.use(company_routes_1.default);
 app.use(email_routes_1.default);
-app.use(url_routes_1.default);
-app.use(events_routes_1.default);
-app.use(dashboard_routes_1.default);
+app.use(user_routes_1.default);
+app.use(patient_routes_1.default);
+app.use(specialty_routes_1.default);
+app.use(doctor_routes_1.default);
+app.use(procedure_routes_1.default);
+app.use(equipment_routes_1.default);
+app.use(calendar_routes_1.default);
+app.use(appointment_routes_1.default);
 //LOCAL
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         app.listen(app.get('port'));
         console.log('Server on port ', app.get('port'));
-        console.log(process.env.MONGODB_URI);
-        console.log(process.env.MONGODB_USER);
-        console.log(process.env.MONGODB_PASSWORD);
     });
 }
 main();
