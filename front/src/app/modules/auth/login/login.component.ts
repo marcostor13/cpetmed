@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.form).subscribe((user:CUser)=>{
       localStorage.setItem('bintuser', JSON.stringify(user))
       this.generalService.isLoad('0')
-      this.router.navigate(['/'])
+      this.router.navigate(['/patient'])
     }, error =>{
         this.generalService.isLoad('0')
         this.generalService.c('Login Error', error)
